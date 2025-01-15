@@ -2,14 +2,23 @@ import User from "../models/user.model.js";
 
 export const createUser = async (req, res) => {
   const user = req.body;
+  const email = req.params.email;
 
-  if (!user.email || !user.image || !user.name || !user.role) {
+  const isExist = await User.findOne({ email: email });
+
+  if (isExist) {
+    return res
+      .status(400)
+      .json({ success: false, message: "User Already Exists in database" });
+  }
+
+  if (!user.email || !user.image || !user.name) {
     return res
       .status(400)
       .json({ success: false, message: "Please provide all fields" });
   }
 
-  const newUser = new User(user);
+  const newUser = new User({ ...user, role: "worker" });
 
   try {
     await newUser.save();
