@@ -30,3 +30,13 @@ export const createJob = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+export const getAllJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find({});
+    res.status(200).json({ success: true, data: jobs });
+  } catch (err) {
+    console.log("Error in creating job: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
