@@ -8,7 +8,7 @@ export const createUser = async (req, res) => {
 
   if (isExist) {
     return res
-      .status(400)
+      .status(202)
       .json({ success: false, message: "User Already Exists in database" });
   }
 
