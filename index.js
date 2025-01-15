@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { connectDB } from "./config/db.js";
 import userRouter from "./routes/user.route.js";
-import jobRouter from "./routes/job.route.js";
+import taskRouter from "./routes/task.route.js";
 
 dotenv.config();
 
@@ -20,6 +20,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRouter);
-app.use("/job", jobRouter);
+app.use("/task", taskRouter);
 
 app.listen(PORT, () => console.log("Server running on " + PORT));
