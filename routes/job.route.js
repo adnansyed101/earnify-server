@@ -1,10 +1,17 @@
 import express from "express";
-import { createJob, getAllJobs } from "../controllers/job.controller.js";
+import {
+  createJob,
+  getAllTasks,
+  getSingleTask,
+} from "../controllers/job.controller.js";
 
 const router = express.Router();
 
 // Create a job
-router.get("/", getAllJobs);
+router.get("/", getAllTasks);
+
+// Create single job
+router.get("/:id", getSingleTask);
 
 // Create a job
 router.post("/", createJob);
