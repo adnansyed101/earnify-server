@@ -52,8 +52,8 @@ export const getSingleTask = async (req, res) => {
   }
 
   try {
-    const task = await Job.findById(id);
-    res.status(200).json({ success: true, data: task });
+    const job = await Job.findById(id);
+    res.status(200).json({ success: true, data: job });
   } catch (err) {
     console.log("Error in finding job: " + err.message);
     res.status(500).json({ success: false, message: "Server Error" });
