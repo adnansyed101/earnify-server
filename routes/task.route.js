@@ -10,7 +10,7 @@ const router = express.Router();
 // Get all Tasks
 router.get("/", getAllTasks);
 
-// Create single Task
+// Get single Task
 router.get("/:id", getSingleTask);
 
 // Create a Task
