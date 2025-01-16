@@ -29,6 +29,10 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  buyerEmail: {
+    type: String,
+    required: true,
+  },
   buyer: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: "User",
