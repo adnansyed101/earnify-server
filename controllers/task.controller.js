@@ -12,6 +12,7 @@ export const createTask = async (req, res) => {
     !task.completionDate ||
     !task.submissionInfo ||
     !task.imageURL ||
+    !task.buyerEmail ||
     !task.buyer
   ) {
     return res
@@ -35,6 +36,19 @@ export const getAllTasks = async (req, res) => {
     const tasks = await Task.find({ requiredWorkers: { $gt: 0 } }).populate(
       "buyer"
     );
+    res.status(200).json({ success: true, data: tasks });
+  } catch (err) {
+    console.log("Error in finding all jobs: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+export const getSpecificUserTask = async (req, res) => {
+  const email = req.params.email;
+
+  try {
+    const tasks = await Task.find({ buyerEmail: email }).populate("buyer");
+
     res.status(200).json({ success: true, data: tasks });
   } catch (err) {
     console.log("Error in finding all jobs: " + err.message);
