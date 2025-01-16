@@ -4,6 +4,7 @@ import cors from "cors";
 import { connectDB } from "./config/db.js";
 import userRouter from "./routes/user.route.js";
 import taskRouter from "./routes/task.route.js";
+import submissionRouter from "./routes/submission.route.js";
 
 dotenv.config();
 
@@ -21,5 +22,6 @@ app.get("/", (req, res) => {
 
 app.use("/user", userRouter);
 app.use("/task", taskRouter);
+app.use("/submission", submissionRouter);
 
 app.listen(PORT, () => console.log("Server running on " + PORT));
