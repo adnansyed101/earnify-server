@@ -12,11 +12,11 @@ const buyerSchema = new mongoose.Schema({
 });
 
 const workerSchema = new mongoose.Schema({
-  email: {
+  name: {
     type: String,
     required: true,
   },
-  name: {
+  email: {
     type: String,
     required: true,
   },
@@ -50,3 +50,7 @@ const submissionSchema = new mongoose.Schema({
   worker: workerSchema,
   buyer: buyerSchema,
 });
+
+const Submission = mongoose.model("Submission", submissionSchema);
+
+export default Submission;
