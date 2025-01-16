@@ -17,7 +17,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  status: String,
+  coin: {
+    type: Number,
+    required: true,
+  }
 });
 
 const User = mongoose.model("User", userSchema);
