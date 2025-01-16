@@ -30,3 +30,13 @@ export const createSubmission = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+export const getAllSubmissions = async (req, res) => {
+  try {
+    const submissions = await Submission.find({});
+    res.status(200).json({ success: true, data: submissions });
+  } catch (err) {
+    console.log("Error in finding all submissions: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
