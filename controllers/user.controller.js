@@ -28,3 +28,17 @@ export const createUser = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+export const getSingleUser = async (req, res) => {
+  const email = req.query.email;
+
+  console.log(email);
+
+  try {
+    const user = await User.find({ email });
+    res.status(200).json({ success: true, data: user });
+  } catch (err) {
+    console.log("Error in finding job: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
