@@ -12,13 +12,13 @@ export const createUser = async (req, res) => {
       .json({ success: false, message: "User Already Exists in database" });
   }
 
-  if (!user.email || !user.image || !user.name) {
+  if (!user.email || !user.image || !user.name || !user.role || !user.coin) {
     return res
       .status(400)
       .json({ success: false, message: "Please provide all fields" });
   }
 
-  const newUser = new User({ ...user, role: "worker" });
+  const newUser = new User(user);
 
   try {
     await newUser.save();
