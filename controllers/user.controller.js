@@ -32,10 +32,8 @@ export const createUser = async (req, res) => {
 export const getSingleUser = async (req, res) => {
   const email = req.query.email;
 
-  console.log(email);
-
   try {
-    const user = await User.find({ email });
+    const user = await User.findOne({ email });
     res.status(200).json({ success: true, data: user });
   } catch (err) {
     console.log("Error in finding job: " + err.message);
