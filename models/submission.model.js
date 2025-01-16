@@ -1,27 +1,5 @@
 import mongoose from "mongoose";
 
-const buyerSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-});
-
-const workerSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-});
-
 const submissionSchema = new mongoose.Schema({
   taskId: {
     type: String,
@@ -47,8 +25,14 @@ const submissionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  worker: workerSchema,
-  buyer: buyerSchema,
+  worker: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "User",
+  },
+  buyer: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "User",
+  },
 });
 
 const Submission = mongoose.model("Submission", submissionSchema);
