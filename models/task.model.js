@@ -1,20 +1,5 @@
 import mongoose from "mongoose";
 
-const buyerSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-});
-
 const taskSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -44,7 +29,10 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  buyer: buyerSchema,
+  buyer: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "User",
+  },
 });
 
 const Task = mongoose.model("Task", taskSchema);
