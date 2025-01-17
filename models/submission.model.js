@@ -1,19 +1,19 @@
 import mongoose from "mongoose";
 
 const submissionSchema = new mongoose.Schema({
-  taskId: {
+  task: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "Task",
+  },
+  buyerEmail: {
     type: String,
     required: true,
   },
-  taskTitle: {
+  workerEmail: {
     type: String,
     required: true,
   },
-  payableAmount: {
-    type: Number,
-    required: true,
-  },
-  submissionDetails: {
+  status: {
     type: String,
     required: true,
   },
@@ -21,7 +21,7 @@ const submissionSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  status: {
+  submissionDetail: {
     type: String,
     required: true,
   },
