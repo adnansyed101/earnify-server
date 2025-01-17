@@ -47,7 +47,9 @@ export const getSpecificUserTask = async (req, res) => {
   const email = req.params.email;
 
   try {
-    const tasks = await Task.find({ buyerEmail: email }).populate("buyer");
+    const tasks = await Task.find({ buyerEmail: email })
+      .sort({ completionDate: -1 })
+      .populate("buyer");
 
     res.status(200).json({ success: true, data: tasks });
   } catch (err) {
