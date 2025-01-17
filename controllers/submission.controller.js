@@ -33,7 +33,7 @@ export const getUserSubmissions = async (req, res) => {
   const email = req.query.email;
 
   try {
-    const submissions = await Submission.find({ workerEmail: email }).populate(
+    const submissions = await Submission.find({ buyerEmail: email }).populate(
       "task"
     );
     res.status(200).json({ success: true, data: submissions });
