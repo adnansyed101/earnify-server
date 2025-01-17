@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createTask,
+  deleteTask,
   getAllTasks,
   getSingleTask,
   getSpecificUserTask,
@@ -17,6 +18,9 @@ router.get("/user/:email", getSpecificUserTask);
 
 // Update Task
 router.patch("/update/:id", updateTask);
+
+// Update Task
+router.delete("/delete/:id", deleteTask);
 
 // Get single Task
 router.get("/:id", getSingleTask);
