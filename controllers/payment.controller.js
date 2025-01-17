@@ -25,3 +25,15 @@ export const createPayment = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+export const getUserPayments = async (req, res) => {
+  const email = req.query.email;
+
+  try {
+    const payments = await Payment.find({ buyerEmail: email });
+    res.status(201).json({ success: true, data: payments });
+  } catch (err) {
+    console.log("Error in getting payment: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
