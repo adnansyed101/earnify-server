@@ -26,7 +26,7 @@ export const createTask = async (req, res) => {
     await newTask.save();
     res.status(201).json({ success: true, data: newTask });
   } catch (err) {
-    console.log("Error in creating job: " + err.message);
+    console.log("Error in creating task: " + err.message);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
@@ -38,7 +38,7 @@ export const getAllTasks = async (req, res) => {
     );
     res.status(200).json({ success: true, data: tasks });
   } catch (err) {
-    console.log("Error in finding all jobs: " + err.message);
+    console.log("Error in finding all tasks: " + err.message);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
@@ -51,7 +51,7 @@ export const getSpecificUserTask = async (req, res) => {
 
     res.status(200).json({ success: true, data: tasks });
   } catch (err) {
-    console.log("Error in finding all jobs: " + err.message);
+    console.log("Error in finding all tasks: " + err.message);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
@@ -60,9 +60,7 @@ export const getSingleTask = async (req, res) => {
   const id = req.params.id;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res
-      .status(500)
-      .json({ success: false, message: "Invalid Service Id" });
+    return res.status(500).json({ success: false, message: "Invalid Task Id" });
   }
 
   try {
@@ -70,6 +68,28 @@ export const getSingleTask = async (req, res) => {
     res.status(200).json({ success: true, data: task });
   } catch (err) {
     console.log("Error in finding job: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+export const updateTask = async (req, res) => {
+  const { id } = req.params;
+  const { title, taskDetail, submissionInfo } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(500).json({ success: false, message: "Invalid Task Id" });
+  }
+
+  const updated = {
+    $set: { title, taskDetail, submissionInfo },
+  };
+
+  try {
+    const updatedTask = await Task.findByIdAndUpdate(id, updated, {
+      new: true,
+    });
+    res.status(200).json({ success: true, data: updatedTask });
+  } catch (err) {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
