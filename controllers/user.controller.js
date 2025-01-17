@@ -40,3 +40,21 @@ export const getSingleUser = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+export const updateUserCoin = async (req, res) => {
+  const { id } = req.params;
+  const { coin } = req.body;
+
+  const updated = {
+    $set: { coin },
+  };
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(id, updated, {
+      new: true,
+    });
+    res.status(200).json({ success: true, data: updatedUser });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
