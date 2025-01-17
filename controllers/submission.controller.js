@@ -4,16 +4,14 @@ export const createSubmission = async (req, res) => {
   const submission = req.body;
 
   if (
-    !submission.taskId ||
-    !submission.taskTitle ||
-    !submission.payableAmount ||
-    !submission.submissionDetails ||
-    !submission.currentDate ||
+    !submission.task ||
+    !submission.buyerEmail ||
+    !submission.workerEmail ||
     !submission.status ||
-    !submission.worker.name ||
-    !submission.worker.email ||
-    !submission.buyer.name ||
-    !submission.buyer.email
+    !submission.currentDate ||
+    !submission.submissionDetail ||
+    !submission.worker ||
+    !submission.buyer
   ) {
     return res
       .status(400)
