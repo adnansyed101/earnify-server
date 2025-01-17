@@ -1,13 +1,13 @@
 import express from "express";
 import {
   createSubmission,
-  getAllSubmissions,
+  getUserSubmissions,
 } from "../controllers/submission.controller.js";
 
 const router = express.Router();
 
 // Get All submissions
-router.get("/", getAllSubmissions);
+router.get("/", getUserSubmissions);
 
 // Create Submission
 router.post("/", createSubmission);
