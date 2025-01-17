@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import User from "../models/user.model.js";
 
 export const createUser = async (req, res) => {
@@ -44,6 +45,13 @@ export const getSingleUser = async (req, res) => {
 export const updateUserCoin = async (req, res) => {
   const { id } = req.params;
   const { coin } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res
+        .status(500)
+        .json({ success: false, message: "Invalid User Id" });
+    }
+  
 
   const updated = {
     $set: { coin },
