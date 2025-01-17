@@ -31,7 +31,7 @@ export const createSubmission = async (req, res) => {
 
 export const getAllSubmissions = async (req, res) => {
   try {
-    const submissions = await Submission.find({});
+    const submissions = await Submission.find({}).populate('task');
     res.status(200).json({ success: true, data: submissions });
   } catch (err) {
     console.log("Error in finding all submissions: " + err.message);
