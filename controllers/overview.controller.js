@@ -1,6 +1,8 @@
 import Payment from "../models/payment.model.js";
 import Submission from "../models/submission.model.js";
 import Task from "../models/task.model.js";
+import User from "../models/user.model.js";
+import Withdrawal from "../models/withdrawal.model.js";
 
 export const getWorkerOverView = async (req, res) => {
   const email = req.query.email;
@@ -88,6 +90,45 @@ export const getBuyerOverView = async (req, res) => {
     res
       .status(201)
       .json({ success: true, data: { totalPayments, overview, submissions } });
+  } catch (err) {
+    console.log("Error in getting payment: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+export const getAdminOverview = async (req, res) => {
+  try {
+    const totalWorker = await User.countDocuments({ role: "Worker" });
+    const totalBuyer = await User.countDocuments({ role: "Buyer" });
+    const totalAvailableCoin = await User.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalCoins: { $sum: "$coin" },
+        },
+      },
+    ]);
+    const totalPayment = await Withdrawal.aggregate([
+      { $match: { status: "accepted" } },
+      {
+        $group: {
+          _id: null,
+          totalPaid: { $sum: "$withdrawalAmount" },
+        },
+      },
+    ]);
+    const pendingPayments = await Withdrawal.find({ status: "pending" });
+
+    res.status(201).json({
+      success: true,
+      data: {
+        totalWorker,
+        totalBuyer,
+        totalAvailableCoin,
+        totalPayment,
+        pendingPayments,
+      },
+    });
   } catch (err) {
     console.log("Error in getting payment: " + err.message);
     res.status(500).json({ success: false, message: "Server Error" });
