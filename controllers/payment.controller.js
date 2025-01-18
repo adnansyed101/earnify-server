@@ -38,7 +38,7 @@ export const getUserPayments = async (req, res) => {
   }
 };
 
-export const getotalPayments = async (req, res) => {
+export const getTotalPayments = async (req, res) => {
   const email = req.query.email;
 
   try {
