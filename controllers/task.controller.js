@@ -110,3 +110,25 @@ export const deleteTask = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+export const updateTaskRequiredWorkers = async (req, res) => {
+  const { id } = req.params;
+  const { requiredWorkers } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(500).json({ success: false, message: "Invalid Task Id" });
+  }
+
+  const updated = {
+    $set: { requiredWorkers },
+  };
+
+  try {
+    const updatedTask = await Task.findByIdAndUpdate(id, updated, {
+      new: true,
+    });
+    res.status(200).json({ success: true, data: updatedTask });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
