@@ -68,7 +68,6 @@ export const getAllSubmissions = async (req, res) => {
   }
 };
 
-
 export const updateSubmissionStatus = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
@@ -87,6 +86,53 @@ export const updateSubmissionStatus = async (req, res) => {
     });
     res.status(200).json({ success: true, data: updateSubmission });
   } catch (err) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+export const getOverview = async (req, res) => {
+  const email = req.query.email;
+
+  try {
+    const submissionCount = await Submission.countDocuments({
+      workerEmail: email,
+    });
+    const pendingSubmissionsCount = await Submission.countDocuments({
+      workerEmail: email,
+      status: "pending",
+    });
+
+    const totalEarning = await Submission.aggregate([
+      { $match: { workerEmail: email, status: "accepted" } },
+      {
+        $lookup: {
+          from: "tasks",
+          localField: "task",
+          foreignField: "_id",
+          as: "taskDetails",
+        },
+      },
+      {
+        $unwind: "$taskDetails",
+      },
+      {
+        $group: {
+          _id: null,
+          totalPaybableAmount: { $sum: "$taskDetails.payableAmount" },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        submissionCount,
+        pendingSubmissionsCount,
+        totalEarning: totalEarning[0] || { totalPaybableAmount: 0 },
+      },
+    });
+  } catch (err) {
+    console.log(err);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
