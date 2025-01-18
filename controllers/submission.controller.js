@@ -30,11 +30,25 @@ export const createSubmission = async (req, res) => {
   }
 };
 
-export const getUserSubmissions = async (req, res) => {
+export const getBuyerSubmissions = async (req, res) => {
   const email = req.query.email;
 
   try {
     const submissions = await Submission.find({ buyerEmail: email })
+      .populate("task")
+      .populate("worker");
+    res.status(200).json({ success: true, data: submissions });
+  } catch (err) {
+    console.log("Error in finding all submissions: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+export const getWorkerSubmissions = async (req, res) => {
+  const email = req.query.email;
+
+  try {
+    const submissions = await Submission.find({ workerEmail: email })
       .populate("task")
       .populate("worker");
     res.status(200).json({ success: true, data: submissions });
