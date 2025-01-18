@@ -17,7 +17,7 @@ router.get("/", getAllTasks);
 // Get Individual user tasks
 router.get("/user/:email", getSpecificUserTask);
 
-// Update Task
+// Update Task's required number of workers
 router.patch("/update/requiredWorker/:id", updateTaskRequiredWorkers);
 
 // Update Task
