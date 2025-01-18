@@ -3,7 +3,6 @@ import {
   createTask,
   deleteTask,
   getAllTasks,
-  getOverview,
   getSingleTask,
   getSpecificUserTask,
   updateTask,
@@ -14,9 +13,6 @@ const router = express.Router();
 
 // Get all Tasks
 router.get("/", getAllTasks);
-
-// Get overview of Tasks
-router.get("/overview", getOverview);
 
 // Get Individual user tasks
 router.get("/user/:email", getSpecificUserTask);

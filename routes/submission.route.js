@@ -4,7 +4,6 @@ import {
   getBuyerSubmissions,
   getWorkerSubmissions,
   updateSubmissionStatus,
-  getOverview,
 } from "../controllers/submission.controller.js";
 
 const router = express.Router();
@@ -14,9 +13,6 @@ router.get("/buyer", getBuyerSubmissions);
 
 // Get All Worker submissions
 router.get("/worker", getWorkerSubmissions);
-
-// Get All submissions
-router.get("/overview", getOverview);
 
 // Create Submission
 router.post("/", createSubmission);
