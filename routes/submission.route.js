@@ -1,14 +1,18 @@
 import express from "express";
 import {
   createSubmission,
-  getUserSubmissions,
+  getBuyerSubmissions,
+  getWorkerSubmissions,
   updateSubmissionStatus,
 } from "../controllers/submission.controller.js";
 
 const router = express.Router();
 
 // Get All submissions
-router.get("/", getUserSubmissions);
+router.get("/buyer", getBuyerSubmissions);
+
+// Get All submissions
+router.get("/worker", getWorkerSubmissions);
 
 // Create Submission
 router.post("/", createSubmission);
