@@ -6,6 +6,7 @@ import {
   getSingleTask,
   getSpecificUserTask,
   updateTask,
+  updateTaskRequiredWorkers,
 } from "../controllers/task.controller.js";
 
 const router = express.Router();
@@ -15,6 +16,9 @@ router.get("/", getAllTasks);
 
 // Get Individual user tasks
 router.get("/user/:email", getSpecificUserTask);
+
+// Update Task
+router.patch("/update/requiredWorker/:id", updateTaskRequiredWorkers);
 
 // Update Task
 router.patch("/update/:id", updateTask);
