@@ -37,23 +37,3 @@ export const getUserPayments = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
-
-export const getTotalPayments = async (req, res) => {
-  const email = req.query.email;
-
-  try {
-    const totalPayments = await Payment.aggregate([
-      { $match: { buyerEmail: email } },
-      {
-        $group: {
-          _id: null,
-          totalPaid: { $sum: "$amountPaid" },
-        },
-      },
-    ]);
-    res.status(201).json({ success: true, data: totalPayments });
-  } catch (err) {
-    console.log("Error in getting payment: " + err.message);
-    res.status(500).json({ success: false, message: "Server Error" });
-  }
-};

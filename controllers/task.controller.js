@@ -132,23 +132,3 @@ export const updateTaskRequiredWorkers = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
-
-export const getOverview = async (req, res) => {
-  const email = req.query.email;
-
-  try {
-    const overview = await Task.aggregate([
-      { $match: { buyerEmail: email } },
-      {
-        $group: {
-          _id: null,
-          countOfTasks: { $sum: 1 },
-          totalRequiredWorkers: { $sum: "$requiredWorkers" },
-        },
-      },
-    ]);
-    res.status(200).json({ success: true, data: overview });
-  } catch (err) {
-    res.status(500).json({ success: false, message: "Server Error" });
-  }
-};
