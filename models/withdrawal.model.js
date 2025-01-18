@@ -6,7 +6,7 @@ const withdrawalSchema = new mongoose.Schema({
     required: true,
   },
   withdrawalAmount: {
-    type: String,
+    type: Number,
     required: true,
   },
   paymentSystem: {
