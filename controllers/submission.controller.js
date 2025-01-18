@@ -33,9 +33,9 @@ export const getUserSubmissions = async (req, res) => {
   const email = req.query.email;
 
   try {
-    const submissions = await Submission.find({ buyerEmail: email }).populate(
-      "task"
-    );
+    const submissions = await Submission.find({ buyerEmail: email })
+      .populate("task")
+      .populate("worker");
     res.status(200).json({ success: true, data: submissions });
   } catch (err) {
     console.log("Error in finding all submissions: " + err.message);
