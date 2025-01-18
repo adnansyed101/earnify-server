@@ -6,6 +6,7 @@ import userRouter from "./routes/user.route.js";
 import taskRouter from "./routes/task.route.js";
 import submissionRouter from "./routes/submission.route.js";
 import paymentRouter from "./routes/payment.route.js";
+import overviewRouter from "./routes/overview.route.js"
 
 dotenv.config();
 
@@ -25,5 +26,6 @@ app.use("/user", userRouter);
 app.use("/task", taskRouter);
 app.use("/submission", submissionRouter);
 app.use("/payment", paymentRouter);
+app.use("/overview", overviewRouter);
 
 app.listen(PORT, () => console.log("Server running on " + PORT));
