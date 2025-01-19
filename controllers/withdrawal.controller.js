@@ -27,3 +27,26 @@ export const createWithdrawal = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+const updateWithdrawalStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(500).json({ success: false, message: "Invalid Task Id" });
+  }
+
+  const updated = {
+    $set: { status },
+  };
+
+  try {
+    const updatedWithdrawal = await Withdrawal.findByIdAndUpdate(id, updated, {
+      new: true,
+    });
+    res.status(200).json({ success: true, data: updatedWithdrawal });
+  } catch (err) {
+    console.log("Error in creating widrawal: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
