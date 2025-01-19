@@ -117,7 +117,9 @@ export const getAdminOverview = async (req, res) => {
         },
       },
     ]);
-    const pendingPayments = await Withdrawal.find({ status: "pending" });
+    const pendingPayments = await Withdrawal.find({
+      status: "pending",
+    }).populate("worker");
 
     res.status(201).json({
       success: true,
