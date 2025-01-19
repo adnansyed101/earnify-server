@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import User from "../models/user.model.js";
+import Submission from "../models/submission.model.js";
+import Task from "../models/task.model.js";
+import Withdrawal from "../models/withdrawal.model.js";
 
 export const createUser = async (req, res) => {
   const user = req.body;
@@ -92,6 +95,28 @@ export const updateUserRole = async (req, res) => {
     });
     res.status(200).json({ success: true, data: updatedUser });
   } catch (err) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(500).json({ success: false, message: "Invalid User Id" });
+  }
+
+  try {
+    await User.findByIdAndDelete(id);
+    await Task.deleteMany({ buyer: id });
+    await Submission.deleteMany({ worker: id });
+    await Submission.deleteMany({ buyer: id });
+    await Withdrawal.deleteMany({ worker: id });
+    res
+      .status(200)
+      .json({ success: true, message: "Deleted User and All user Tasks" });
+  } catch (err) {
+    console.log(err.message);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
