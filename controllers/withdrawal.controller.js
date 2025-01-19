@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Withdrawal from "../models/withdrawal.model.js";
 
 export const createWithdrawal = async (req, res) => {
@@ -28,12 +29,12 @@ export const createWithdrawal = async (req, res) => {
   }
 };
 
-const updateWithdrawalStatus = async (req, res) => {
+export const updateWithdrawalStatus = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(500).json({ success: false, message: "Invalid Task Id" });
+    return res.status(500).json({ success: false, message: "Invalid Withdrawal Id" });
   }
 
   const updated = {
