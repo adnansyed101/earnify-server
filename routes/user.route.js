@@ -1,11 +1,15 @@
 import express from "express";
 import {
   createUser,
+  getAllUsers,
   getSingleUser,
   updateUserCoin,
 } from "../controllers/user.controller.js";
 
 const router = express.Router();
+
+// Get user from query
+router.get("/alluser", getAllUsers);
 
 // Get user from query
 router.get("/", getSingleUser);
