@@ -37,7 +37,7 @@ export const getSingleUser = async (req, res) => {
     const user = await User.findOne({ email });
     res.status(200).json({ success: true, data: user });
   } catch (err) {
-    console.log("Error in finding job: " + err.message);
+    console.log("Error in finding user: " + err.message);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
@@ -47,11 +47,8 @@ export const updateUserCoin = async (req, res) => {
   const { coin } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res
-        .status(500)
-        .json({ success: false, message: "Invalid User Id" });
-    }
-  
+    return res.status(500).json({ success: false, message: "Invalid User Id" });
+  }
 
   const updated = {
     $set: { coin },
@@ -63,6 +60,16 @@ export const updateUserCoin = async (req, res) => {
     });
     res.status(200).json({ success: true, data: updatedUser });
   } catch (err) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json({ success: true, data: users });
+  } catch (err) {
+    console.log("Error in finding all users: " + err.message);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
