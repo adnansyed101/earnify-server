@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createUser,
+  deleteUser,
   getAllUsers,
   getSingleUser,
   updateUserCoin,
@@ -17,6 +18,9 @@ router.get("/", getSingleUser);
 
 // Update user coin
 router.patch("/updatecoin/:id", updateUserCoin);
+
+// Delete user
+router.delete("/deleteuser/:id", deleteUser);
 
 // Update user role
 router.patch("/updaterole/:id", updateUserRole);
