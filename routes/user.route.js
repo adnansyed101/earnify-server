@@ -4,6 +4,7 @@ import {
   getAllUsers,
   getSingleUser,
   updateUserCoin,
+  updateUserRole,
 } from "../controllers/user.controller.js";
 
 const router = express.Router();
@@ -16,6 +17,9 @@ router.get("/", getSingleUser);
 
 // Update user coin
 router.patch("/updatecoin/:id", updateUserCoin);
+
+// Update user role
+router.patch("/updaterole/:id", updateUserRole);
 
 // Create a user
 router.post("/:email", createUser);
