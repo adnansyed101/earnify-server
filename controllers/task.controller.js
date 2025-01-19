@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Task from "../models/task.model.js";
+import Submission from "../models/submission.model.js";
 
 export const createTask = async (req, res) => {
   const task = req.body;
@@ -105,6 +106,7 @@ export const deleteTask = async (req, res) => {
 
   try {
     await Task.findByIdAndDelete(id);
+    await Submission.deleteMany({ task: id });
     res.status(200).json({ success: true, message: "Task Deleted" });
   } catch (err) {
     res.status(500).json({ success: false, message: "Server Error" });
