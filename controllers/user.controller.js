@@ -73,3 +73,25 @@ export const getAllUsers = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+export const updateUserRole = async (req, res) => {
+  const { id } = req.params;
+  const { role } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(500).json({ success: false, message: "Invalid User Id" });
+  }
+
+  const updated = {
+    $set: { role },
+  };
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(id, updated, {
+      new: true,
+    });
+    res.status(200).json({ success: true, data: updatedUser });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
