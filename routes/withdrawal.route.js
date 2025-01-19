@@ -1,9 +1,15 @@
 import express from "express";
-import { createWithdrawal } from "../controllers/withdrawal.controller.js";
+import {
+  createWithdrawal,
+  updateWithdrawalStatus,
+} from "../controllers/withdrawal.controller.js";
 
 const router = express.Router();
 
 // Create Withdrawal
 router.post("/", createWithdrawal);
+
+// Update Withdrawal Status
+router.patch("/status/:id", updateWithdrawalStatus);
 
 export default router;
