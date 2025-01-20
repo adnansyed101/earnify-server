@@ -3,6 +3,7 @@ import {
   createUser,
   deleteUser,
   getAllUsers,
+  getBestWorker,
   getSingleUser,
   updateUserCoin,
   updateUserRole,
@@ -17,6 +18,9 @@ router.get("/alluser", verifyToken, verifyAdmin, getAllUsers);
 
 // Get user from query
 router.get("/", verifyToken, getSingleUser);
+
+// Get best Worker
+router.get("/bestworker", getBestWorker);
 
 // Update user coin
 router.patch("/updatecoin/:id", verifyToken, updateUserCoin);
