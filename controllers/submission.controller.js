@@ -46,9 +46,13 @@ export const getBuyerSubmissions = async (req, res) => {
 
 export const getWorkerSubmissions = async (req, res) => {
   const email = req.query.email;
+  const page = parseInt(req.query.page);
+  const size = parseInt(req.query.size);
 
   try {
     const submissions = await Submission.find({ workerEmail: email })
+      .skip(page * size)
+      .limit(size)
       .populate("task")
       .populate("worker");
     res.status(200).json({ success: true, data: submissions });
