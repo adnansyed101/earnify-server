@@ -79,3 +79,15 @@ export const updateSubmissionStatus = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+export const getWorkerSubmissionsCount = async (req, res) => {
+  const email = req.query.email;
+
+  try {
+    const submissions = await Submission.countDocuments({ workerEmail: email });
+    res.status(200).json({ success: true, data: submissions });
+  } catch (err) {
+    console.log("Error in finding all submissions: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
