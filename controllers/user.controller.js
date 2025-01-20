@@ -125,3 +125,15 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+export const getBestWorker = async (req, res) => {
+  try {
+    const bestWorker = await User.find({ role: "Worker" })
+      .sort({ coin: -1 })
+      .limit(6);
+    res.status(200).json({ success: true, data: bestWorker });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
