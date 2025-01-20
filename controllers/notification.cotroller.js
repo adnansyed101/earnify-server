@@ -24,7 +24,7 @@ export const getUserNotifications = async (req, res) => {
   const email = req.query.email;
 
   try {
-    const notifications = await Notification.find({ toEmail: email });
+    const notifications = await Notification.find({ toEmail: email }).sort({time: -1});
     res.status(200).json({ success: true, data: notifications });
   } catch (err) {
     console.log("Error in finding user: " + err.message);
