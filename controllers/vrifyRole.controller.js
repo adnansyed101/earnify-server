@@ -1,8 +1,8 @@
 import User from "../models/user.model.js";
 
-export const verifyAdmin = async (req, res) => {
+export const verifyAdmin = async (req, res, next) => {
   const email = req.user?.email;
-  const user = await User.find({ email });
+  const user = await User.findOne({ email });
 
   if (!user || user?.role !== "Admin") {
     return res
@@ -15,7 +15,8 @@ export const verifyAdmin = async (req, res) => {
 
 export const verifyBuyer = async (req, res, next) => {
   const email = req.user?.email;
-  const user = await User.find({ email });
+  const user = await User.findOne({ email });
+
   if (!user || user?.role !== "Buyer") {
     return res
       .status(403)
@@ -26,7 +27,7 @@ export const verifyBuyer = async (req, res, next) => {
 
 export const verifyWorker = async (req, res, next) => {
   const email = req.user?.email;
-  const user = await User.find({ email });
+  const user = await User.findOne({ email });
   if (!user || user?.role !== "Worker") {
     return res
       .status(403)
