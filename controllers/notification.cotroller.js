@@ -19,3 +19,15 @@ export const createNotification = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+export const getUserNotifications = async (req, res) => {
+  const email = req.query.email;
+
+  try {
+    const notifications = await Notification.find({ toEmail: email });
+    res.status(200).json({ success: true, data: notifications });
+  } catch (err) {
+    console.log("Error in finding user: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
