@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 const corsOptions = {
   origin: [
     "http://localhost:5173",
-    "https://earnify-e4e0e.web.app/",
+    "https://earnify-e4e0e.web.app",
     "https://console.firebase.google.com/u/0/project/earnify-e4e0e/overview",
   ],
   credentials: true,
