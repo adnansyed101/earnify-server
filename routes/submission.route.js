@@ -6,19 +6,23 @@ import {
   updateSubmissionStatus,
 } from "../controllers/submission.controller.js";
 import { verifyToken } from "../controllers/jwt.controller.js";
+import {
+  verifyBuyer,
+  verifyWorker,
+} from "../controllers/vrifyRole.controller.js";
 
 const router = express.Router();
 
 // Get All Buyer submissions
-router.get("/buyer", verifyToken, getBuyerSubmissions);
+router.get("/buyer", verifyToken, verifyBuyer, getBuyerSubmissions);
 
 // Get All Worker submissions
-router.get("/worker", verifyToken, getWorkerSubmissions);
+router.get("/worker", verifyToken, verifyWorker, getWorkerSubmissions);
 
 // Create Submission
-router.post("/", verifyToken, createSubmission);
+router.post("/", verifyToken, verifyWorker, createSubmission);
 
 // Update Submission Status
-router.patch("/update/status/:id", verifyToken, updateSubmissionStatus);
+router.patch("/update/status/:id", verifyToken, verifyBuyer, updateSubmissionStatus);
 
 export default router;
