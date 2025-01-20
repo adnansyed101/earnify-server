@@ -10,6 +10,7 @@ import submissionRouter from "./routes/submission.route.js";
 import paymentRouter from "./routes/payment.route.js";
 import overviewRouter from "./routes/overview.route.js";
 import withdrawalRouter from "./routes/withdrawal.route.js";
+import notificationRouter from "./routes/notification.route.js";
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
 connectDB();
 
@@ -39,5 +40,6 @@ app.use("/submission", submissionRouter);
 app.use("/payment", paymentRouter);
 app.use("/overview", overviewRouter);
 app.use("/withdrawal", withdrawalRouter);
+app.use("/notification", notificationRouter);
 
 app.listen(PORT, () => console.log("Server running on " + PORT));
