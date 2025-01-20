@@ -1,7 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import { connectDB } from "./config/db.js";
+import jwtRoute from "./routes/jwt.route.js";
 import userRouter from "./routes/user.route.js";
 import taskRouter from "./routes/task.route.js";
 import submissionRouter from "./routes/submission.route.js";
@@ -14,8 +16,15 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const corsOptions = {
+  origin: ["http://localhost:5173"],
+  credentials: true,
+  optionalSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser())
 
 connectDB();
 
@@ -23,6 +32,7 @@ app.get("/", (req, res) => {
   res.send("Hello From Earnify");
 });
 
+app.use("/jwt", jwtRoute);
 app.use("/user", userRouter);
 app.use("/task", taskRouter);
 app.use("/submission", submissionRouter);
