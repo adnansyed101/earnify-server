@@ -30,12 +30,12 @@ export const verifyToken = (req, res, next) => {
   const token = req.cookies?.token;
 
   if (!token) {
-    return res.status(401).send({ message: "Unauthorized Access" });
+    return res.status(401).send({ message: "Unauthorized Access. No Token." });
   }
 
   jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
     if (err) {
-      return res.status(401).send({ message: "Unauthorized Access" });
+      return res.status(400).send({ message: "Unauthorized Access. Invalid Token." });
     } else {
       req.user = decoded;
       next();
