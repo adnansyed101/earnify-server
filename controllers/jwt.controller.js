@@ -38,8 +38,7 @@ export const verifyToken = (req, res, next) => {
       return res.status(401).send({ message: "Unauthorized Access" });
     } else {
       req.user = decoded;
+      next();
     }
   });
-
-  next();
 };

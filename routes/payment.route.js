@@ -3,13 +3,14 @@ import {
   createPayment,
   getUserPayments,
 } from "../controllers/payment.controller.js";
+import { verifyToken } from "../controllers/jwt.controller.js";
 
 const router = express.Router();
 
 // Get specific user payments
-router.get("/", getUserPayments);
+router.get("/", verifyToken, getUserPayments);
 
 // Create Payment
-router.post("/", createPayment);
+router.post("/", verifyToken, createPayment);
 
 export default router;

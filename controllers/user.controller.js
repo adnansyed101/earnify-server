@@ -35,6 +35,11 @@ export const createUser = async (req, res) => {
 
 export const getSingleUser = async (req, res) => {
   const email = req.query.email;
+  const decodedEmail = req.user?.email;
+
+  if (decodedEmail !== email) {
+    return res.status(401).send({ message: "Unauthorized Access" });
+  }
 
   try {
     const user = await User.findOne({ email });

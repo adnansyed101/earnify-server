@@ -5,19 +5,20 @@ import {
   getWorkerSubmissions,
   updateSubmissionStatus,
 } from "../controllers/submission.controller.js";
+import { verifyToken } from "../controllers/jwt.controller.js";
 
 const router = express.Router();
 
 // Get All Buyer submissions
-router.get("/buyer", getBuyerSubmissions);
+router.get("/buyer", verifyToken, getBuyerSubmissions);
 
 // Get All Worker submissions
-router.get("/worker", getWorkerSubmissions);
+router.get("/worker", verifyToken, getWorkerSubmissions);
 
 // Create Submission
-router.post("/", createSubmission);
+router.post("/", verifyToken, createSubmission);
 
 // Update Submission Status
-router.patch("/update/status/:id", updateSubmissionStatus);
+router.patch("/update/status/:id", verifyToken, updateSubmissionStatus);
 
 export default router;

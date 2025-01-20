@@ -46,6 +46,11 @@ export const getAllTasks = async (req, res) => {
 
 export const getSpecificUserTask = async (req, res) => {
   const email = req.params.email;
+  const decodedEmail = req.user?.email;
+
+  if (decodedEmail !== email) {
+    return res.status(401).send({ message: "Unauthorized Access" });
+  }
 
   try {
     const tasks = await Task.find({ buyerEmail: email })

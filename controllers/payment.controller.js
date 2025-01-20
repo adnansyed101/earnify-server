@@ -28,6 +28,11 @@ export const createPayment = async (req, res) => {
 
 export const getUserPayments = async (req, res) => {
   const email = req.query.email;
+  const decodedEmail = req.user?.email;
+
+  if (decodedEmail !== email) {
+    return res.status(401).send({ message: "Unauthorized Access" });
+  }
 
   try {
     const payments = await Payment.find({ buyerEmail: email });

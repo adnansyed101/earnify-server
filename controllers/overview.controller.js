@@ -6,6 +6,11 @@ import Withdrawal from "../models/withdrawal.model.js";
 
 export const getWorkerOverView = async (req, res) => {
   const email = req.query.email;
+  const decodedEmail = req.user?.email;
+
+  if (decodedEmail !== email) {
+    return res.status(401).send({ message: "Unauthorized Access" });
+  }
 
   try {
     const submissionCount = await Submission.countDocuments({
@@ -60,6 +65,11 @@ export const getWorkerOverView = async (req, res) => {
 
 export const getBuyerOverView = async (req, res) => {
   const email = req.query.email;
+  const decodedEmail = req.user?.email;
+
+  if (decodedEmail !== email) {
+    return res.status(401).send({ message: "Unauthorized Access" });
+  }
 
   try {
     const totalPayments = await Payment.aggregate([
@@ -97,6 +107,13 @@ export const getBuyerOverView = async (req, res) => {
 };
 
 export const getAdminOverview = async (req, res) => {
+  const { email } = req.query;
+  const decodedEmail = req.user?.email;
+
+  if (decodedEmail !== email) {
+    return res.status(401).send({ message: "Unauthorized Access" });
+  }
+  
   try {
     const totalWorker = await User.countDocuments({ role: "Worker" });
     const totalBuyer = await User.countDocuments({ role: "Buyer" });
