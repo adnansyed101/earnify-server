@@ -33,10 +33,20 @@ export const createTask = async (req, res) => {
 };
 
 export const getAllTasks = async (req, res) => {
+  const { sort } = req.query;
+
+  let option = {};
+
+  if (sort) {
+    option = { sort: { payableAmount: sort === "asc" ? 1 : -1 } };
+  }
+
   try {
-    const tasks = await Task.find({ requiredWorkers: { $gt: 0 } }).populate(
-      "buyer"
-    );
+    const tasks = await Task.find(
+      { requiredWorkers: { $gt: 0 } },
+      null,
+      option
+    ).populate("buyer");
     res.status(200).json({ success: true, data: tasks });
   } catch (err) {
     console.log("Error in finding all tasks: " + err.message);
