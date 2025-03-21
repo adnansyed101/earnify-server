@@ -14,13 +14,17 @@ import { verifyBuyer } from "../controllers/vrifyRole.controller.js";
 const router = express.Router();
 
 // Get all Tasks
-router.get("/", verifyToken, getAllTasks);
+router.get("/", getAllTasks);
 
 // Get Individual user tasks
 router.get("/user/:email", verifyToken, verifyBuyer, getSpecificUserTask);
 
 // Update Task's required number of workers
-router.patch("/update/requiredWorker/:id", verifyToken, updateTaskRequiredWorkers);
+router.patch(
+  "/update/requiredWorker/:id",
+  verifyToken,
+  updateTaskRequiredWorkers
+);
 
 // Update Task
 router.patch("/update/:id", verifyToken, verifyBuyer, updateTask);
@@ -32,6 +36,6 @@ router.delete("/delete/:id", verifyToken, deleteTask);
 router.get("/:id", verifyToken, getSingleTask);
 
 // Create a Task
-router.post("/",verifyToken, createTask);
+router.post("/", verifyToken, createTask);
 
 export default router;
